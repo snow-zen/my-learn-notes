@@ -1,4 +1,4 @@
-# 覆盖 equals 方法时始终要覆盖 hashCode 方法
+# 覆盖 equals 方法时始终覆盖 hashCode 方法
 #Java 
 
 在每个覆盖 equals 方法的类中，都必须要覆盖 hashCode 方法。如果不这样做，就违反了 hashCode 通用约定，从而导致该类无法结合所有基于散列值的集合一起工作。

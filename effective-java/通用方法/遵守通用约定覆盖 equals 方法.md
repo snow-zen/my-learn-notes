@@ -254,7 +254,7 @@ public boolean equals(Object obj) {
 3. 对于引用类型实例可以递归调用 equals 方法进行比较。
 
 额外告诫：
-1. [[覆盖 equals 方法时始终要覆盖 hashCode 方法]]。
+1. [[覆盖 equals 方法时始终覆盖 hashCode 方法]]。
 2. 不要企图让 equals 方法过于智能。
 3. 不要将 equals 声明中的 Object 实例替换为其他类型。
 

@@ -36,7 +36,14 @@ protected void initStrategies(ApplicationContext context) {
 }
 ```
 
-而在这些策略对象中我们只需要关注核心的几个对象即可：MultipartResolver、HandlerMappings、HandlerAdapters、HandlerExceptionResolvers，同时这几个方法的实现也是非常类似：
+而在这些策略对象中我们只需要关注核心的几个对象即可：
+
++ **MultipartResolver**：Multipart 请求解析器。
++ **HandlerMappings**：处理器映射，用于生成处理调用链。
++ **HandlerAdapters**：处理适配器，用于适配业务处理方法。
++ **HandlerExceptionResolvers**：处理器异常解析器，用于处理调用业务处理中抛出的异常。
+
+同时这几个方法的实现也是非常类似：
 
 ```java
 private void initXxx(ApplicationContext context) {  

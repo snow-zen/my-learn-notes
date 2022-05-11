@@ -48,14 +48,14 @@ protected void initStrategies(ApplicationContext context) {
 ```java
 private void initXxx(ApplicationContext context) {  
     // 从上下文或者 BeanFactory 中获取指定对象，多个则排序
-	this.xxx = ...;
-	
-	if (this.xxx == null) {
-		// 如果没找到则获取默认的策略对象
-		this.handlerAdapters = getDefaultStrategies(context, Xxx.class);
-	}
-	
-	// 后续初始化处理
+    this.xxx = ...;
+
+    if (this.xxx == null) {
+        // 如果没找到则获取默认的策略对象
+	this.handlerAdapters = getDefaultStrategies(context, Xxx.class);
+    }
+
+    // 后续初始化处理
 }
 ```
 
@@ -69,12 +69,12 @@ doDispatch 方法是真正处理业务逻辑的核心方法。进入方法后首
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	HttpServletRequest processedRequest = request;
-	boolean multipartRequestParsed = false;
-	// ...
-	processedRequest = checkMultipart(request);
-	multipartRequestParsed = (processedRequest != request);
-	// ...
+    HttpServletRequest processedRequest = request;
+    boolean multipartRequestParsed = false;
+    // ...
+    processedRequest = checkMultipart(request);
+    multipartRequestParsed = (processedRequest != request);
+    // ...
 }
 ```
 
@@ -82,15 +82,15 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	HttpServletRequest processedRequest = request;
-	HandlerExecutionChain mappedHandler = null;
-	// ...
-	mappedHandler = getHandler(processedRequest);  
-	if (mappedHandler == null) {  
-   		noHandlerFound(processedRequest, response);  
-   		return;
-	}
-	// ...
+    HttpServletRequest processedRequest = request;
+    HandlerExecutionChain mappedHandler = null;
+    // ...
+    mappedHandler = getHandler(processedRequest);  
+    if (mappedHandler == null) {  
+        noHandlerFound(processedRequest, response);  
+        return;
+    }
+    // ...
 }
 
 protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {  
@@ -107,15 +107,15 @@ protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Ex
 }
 
 public final HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
-	// 获取处理对象
-	Object handler = getHandlerInternal(request);
+    // 获取处理对象
+    Object handler = getHandlerInternal(request);
 	
-	// ...
+    // ...
 	
-	// 组合成 HandlerExecutionChain 对象
-	HandlerExecutionChain executionChain = getHandlerExecutionChain(handler, request);
+    // 组合成 HandlerExecutionChain 对象
+    HandlerExecutionChain executionChain = getHandlerExecutionChain(handler, request);
 	
-	return executionChain;
+    return executionChain;
 }
 
 protected HandlerExecutionChain getHandlerExecutionChain(Object handler, HttpServletRequest request) {  
@@ -141,13 +141,13 @@ protected HandlerExecutionChain getHandlerExecutionChain(Object handler, HttpSer
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	HandlerExecutionChain mappedHandler = null;
+    HandlerExecutionChain mappedHandler = null;
 	
-	// ...
+    // ...
 	
-	HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+    HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
 	
-	// ...
+    // ...
 }
 
 protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletException {  
@@ -167,15 +167,15 @@ protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletExcepti
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	HandlerExecutionChain mappedHandler = null;
+    HandlerExecutionChain mappedHandler = null;
 	
-	// ...
+    // ...
 	
-	if (!mappedHandler.applyPreHandle(processedRequest, response)) {  
-   		return;  
-	}
+    if (!mappedHandler.applyPreHandle(processedRequest, response)) {  
+        return;  
+    }
 	
-	// ...
+    // ...
 }
 
 boolean applyPreHandle(HttpServletRequest request, HttpServletResponse response) throws Exception {  
@@ -197,16 +197,16 @@ boolean applyPreHandle(HttpServletRequest request, HttpServletResponse response)
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	HttpServletRequest processedRequest = request;
-	HandlerExecutionChain mappedHandler = null;
-	ModelAndView mv = null;
-	HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+    HttpServletRequest processedRequest = request;
+    HandlerExecutionChain mappedHandler = null;
+    ModelAndView mv = null;
+    HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
 	
-	// ...
+    // ...
 	
-	mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+    mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
 	
-	// ...
+    // ...
 }
 ```
 
@@ -214,15 +214,15 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	HttpServletRequest processedRequest = request;
-	HandlerExecutionChain mappedHandler = null;
-	ModelAndView mv = null;
+    HttpServletRequest processedRequest = request;
+    HandlerExecutionChain mappedHandler = null;
+    ModelAndView mv = null;
 	
-	// ...
+    // ...
 	
-	mappedHandler.applyPostHandle(processedRequest, response, mv);
+    mappedHandler.applyPostHandle(processedRequest, response, mv);
 	
-	// ...
+    // ...
 }
 ```
 
@@ -230,54 +230,54 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	HttpServletRequest processedRequest = request;
-	HandlerExecutionChain mappedHandler = null;
+    HttpServletRequest processedRequest = request;
+    HandlerExecutionChain mappedHandler = null;
 	
-	Exception dispatchException = null;
-	try {
-		// ...
-	} catch (Exception ex) {
-		dispatchException = ex;
-	}
-	processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+    Exception dispatchException = null;
+    try {
+        // ...
+    } catch (Exception ex) {
+        dispatchException = ex;
+    }
+    processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
 	
-	// ...
+    // ...
 }
 
 private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,  
       @Nullable HandlerExecutionChain mappedHandler, @Nullable ModelAndView mv,  
       @Nullable Exception exception) throws Exception {
 	
-	// 如果有异常出现
-	if (exception != null) {  
-	   if (exception instanceof ModelAndViewDefiningException) {  
-		  logger.debug("ModelAndViewDefiningException encountered", exception);  
-		  mv = ((ModelAndViewDefiningException) exception).getModelAndView();  
-	   }  
-	   else {  
-		  Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);  
-		  mv = processHandlerException(request, response, handler, exception);  
-		  errorView = (mv != null);  
-	   }  
-	}
-	
-	// 渲染视图
-	if (mv != null && !mv.wasCleared()) {  
-	   render(mv, request, response);  
-	   if (errorView) {  
-		  WebUtils.clearErrorRequestAttributes(request);  
-	   }  
+    // 如果有异常出现
+    if (exception != null) {  
+       if (exception instanceof ModelAndViewDefiningException) {  
+	  logger.debug("ModelAndViewDefiningException encountered", exception);  
+	  mv = ((ModelAndViewDefiningException) exception).getModelAndView();  
+       }  
+       else {  
+           Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);  
+           mv = processHandlerException(request, response, handler, exception);  
+           errorView = (mv != null);  
+       }  
+    }
+
+    // 渲染视图
+    if (mv != null && !mv.wasCleared()) {  
+        render(mv, request, response);  
+	if (errorView) {  
+	    WebUtils.clearErrorRequestAttributes(request);  
 	}  
-	else {  
-	   if (logger.isTraceEnabled()) {  
-		  logger.trace("No view rendering, null ModelAndView returned.");  
-	   }  
-	}
-	
-	if (mappedHandler != null) {  
-	   // 回调
-	   mappedHandler.triggerAfterCompletion(request, response, null); 
-	}
+    }  
+    else {  
+        if (logger.isTraceEnabled()) {  
+	    logger.trace("No view rendering, null ModelAndView returned.");  
+	}  
+    }
+
+    if (mappedHandler != null) {   
+        // 回调
+	mappedHandler.triggerAfterCompletion(request, response, null); 
+    }
 }
 ```
 
@@ -325,17 +325,17 @@ public interface HandlerMethodReturnValueHandler {
 ```java
 protected ModelAndView processHandlerException(HttpServletRequest request, HttpServletResponse response,  
       @Nullable Object handler, Exception ex) throws Exception {
-	ModelAndView exMv = null;
-	if (this.handlerExceptionResolvers != null) {  
-	   for (HandlerExceptionResolver resolver : this.handlerExceptionResolvers) {  
-		  exMv = resolver.resolveException(request, response, handler, ex);  
-		  if (exMv != null) {  
-			 break;  
-		  }  
-	   }  
-	}
-	
-	// ...
+    ModelAndView exMv = null;
+    if (this.handlerExceptionResolvers != null) {  
+        for (HandlerExceptionResolver resolver : this.handlerExceptionResolvers) {  
+	    exMv = resolver.resolveException(request, response, handler, ex);  
+	    if (exMv != null) {  
+		break;  
+	    }  
+        }  
+    }
+
+    // ...
 }
 ```
 

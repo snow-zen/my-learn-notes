@@ -423,12 +423,14 @@ protected void initLifecycleProcessor() {
 在初始化完成 LifecycleProcessor 后立即调用它的 onRefresh 方法：
 
 ```java
+// finishRefresh 方法内
 getLifecycleProcessor().onRefresh();
 ```
 
 最后在上下文中发布 ContextRefreshedEvent 事件，表示上下文已刷新：
 
 ```java
+// finishRefresh 方法内
 publishEvent(new ContextRefreshedEvent(this));
 ```
 

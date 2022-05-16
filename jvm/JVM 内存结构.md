@@ -5,7 +5,7 @@ JVM 内存结构又称“运行时数据区域”，JVM 在执行 Java 程序的
 
 根据《Java 虚拟机规范》的规定，Java 虚拟机所管理的内存将会包括以下几个运行时数据区域：
 
-![运行时数据区域](https://gitee.com/snow-zen/my-images-repo/raw/master/jvm/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F.png)
+![运行时数据区域](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/jvm/%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA%E5%9F%9F.png)
 
 其中的方法区和堆是在整个程序中共享的数据区，随着程序的启动而存在。而虚拟机栈、本地方法栈和程序计数器是每个线程独有的数据区，随着线程的启动而创建，并在线程关闭时销毁。
 

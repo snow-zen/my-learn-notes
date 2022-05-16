@@ -13,7 +13,7 @@ Amdahl 定律描述：在增加计算资源的情况下，程序在理论上能�
 
 Amdahl 定律还量化了串行化的效率开销。在拥有 10 个处理器的系统中，如果程序中有 10% 的部分需要串行执行，那么最高的加速比为 5.3，在拥有 100 个处理器的系统中，加速比可以达到 9.2。即使拥有无限多的 CPU，加速比也不可能为 10。
 
-![在串行部分所占不同比例下的最高利用率](https://gitee.com/snow-zen/my-images-repo/raw/master/java-concurrency-in-practice/%E5%9C%A8%E4%B8%B2%E8%A1%8C%E9%83%A8%E5%88%86%E6%89%80%E5%8D%A0%E4%B8%8D%E5%90%8C%E6%AF%94%E4%BE%8B%E4%B8%8B%E7%9A%84%E6%9C%80%E9%AB%98%E5%88%A9%E7%94%A8%E7%8E%87.jpeg)
+![在串行部分所占不同比例下的最高利用率](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/java-concurrency-in-practice/%E5%9C%A8%E4%B8%B2%E8%A1%8C%E9%83%A8%E5%88%86%E6%89%80%E5%8D%A0%E4%B8%8D%E5%90%8C%E6%AF%94%E4%BE%8B%E4%B8%8B%E7%9A%84%E6%9C%80%E9%AB%98%E5%88%A9%E7%94%A8%E7%8E%87.jpeg)
 
 在所有并行任务中始终有一部分串行的任务：共享变量的读取、并行任务结果的处理。如果你认为在你的程序中不存在串行部分，那么可以再仔细检查一遍。
 

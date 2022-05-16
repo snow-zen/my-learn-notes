@@ -113,7 +113,7 @@ AnnotationAwareAspectJAutoProxyCreator 的 Bean 定义信息在被注册到容�
 
 AnnotationAwareAspectJAutoProxyCreator 的部分 UML 结构如下：
 
-![](https://gitee.com/snow-zen/my-images-repo/raw/master/spring/AnnotationAwareAspectJAutoProxyCreator.png)
+![AnnotationAwareAspectJAutoProxyCreator UML 结构](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/spring/AnnotationAwareAspectJAutoProxyCreator.png)
 
 可以知道该类属于 SmartInstantiationAwareBeanPostProcessor 这一组件，此处我们主要关心三处回调。
 

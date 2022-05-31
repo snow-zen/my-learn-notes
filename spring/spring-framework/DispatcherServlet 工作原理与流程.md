@@ -302,7 +302,7 @@ public interface HandlerMethodArgumentResolver {
 }
 ```
 
-如果需要自定义参数类型解析器，可以让 `@Configuratio`n 配置类实现 WebMvcConfigurer 接口并重写 addArgumentResolvers 方法即可。
+如果需要自定义参数类型解析器，可以让 `@Configuration` 配置类实现 WebMvcConfigurer 接口并重写 addArgumentResolvers 方法即可。
 
 对于返回值则是由 HandlerMethodReturnValueHandler 对象进行解析，同样也是在 RequestMappingHandlerAdapter 方法的 afterPropertiesSet 回调方法中添加默认的参数解析器。
 
@@ -316,7 +316,7 @@ public interface HandlerMethodReturnValueHandler {
 }
 ```
 
-另外，如果需要自定义返回值解析器，也是通过让 `@Configuratio`n 配置类实现 WebMvcConfigurer 接口并重写 addReturnValueHandlers 方法即可。
+另外，如果需要自定义返回值解析器，也是通过让 `@Configuration` 配置类实现 WebMvcConfigurer 接口并重写 addReturnValueHandlers 方法即可。
 
 ## 异常处理
 

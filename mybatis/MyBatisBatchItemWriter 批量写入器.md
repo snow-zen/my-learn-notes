@@ -1,5 +1,5 @@
 # MyBatisBatchItemWriter 批量写入器
-#MyBatis #Spring 
+#Java #MyBatis #Spring 
 
 MyBatisBatchItemWriter 是位于 mybatis-spring 包中类，该类用于批量插入数据都数据库中，通过使用 BatchExector 来提升批量插入的效率。
 

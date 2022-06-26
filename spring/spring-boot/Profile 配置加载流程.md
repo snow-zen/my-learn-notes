@@ -9,18 +9,18 @@ Spring Boot 程序中所有的系统属性和自定义属性都由 Environment �
 
 在[[Spring Boot 启动流程]]中我们可以知道环境对象的创建和配置是由 `org.springframework.boot.SpringApplication#prepareEnvironment` 方法处理的。通过代码调试我们得知以下信息：
 
-![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/java/debug-profile-01.png)
+![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/spring/debug-profile-01.png)
 
 1. Environment 为子类型 ApplicationServletEnvironment 实现。
 2. 实现类中存在属性  activeProfiles 用于记录当前激活的 Profile 列表。
 
 通过在类中搜索得到 activeProfiles 属性值的变更只在 setActiveProfiles 方法中出现，因此我们该方法建立断点，并重启程序。程序如期在断点处终止，通过向上查询调用堆栈，我们可以看到：
 
-![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/java/debug-profile-02.png)
+![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/spring/debug-profile-02.png)
 
 setActiveProfiles 方法的调用是在 Environment 对象准备完成后，由 SpringApplicationRunListeners 监听器所回调的 environmentPrepared 方法引起的。而 SpringApplicationRunListeners 类是一个委托类，实际处理是由内部一系列 SpringApplicationRunListener 监听器完成的。通过继续查找调用堆栈，我们可以看到：
 
-![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/java/debug-profile-03.png)
+![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/spring/debug-profile-03.png)
 
 实际真正的处理是由 EventPublishingRunListener 监听器的 environmentPrepared 方法处理的，而该方法内部则又存在另一层事件监听器模式：
 
@@ -35,11 +35,11 @@ public void environmentPrepared(ConfigurableBootstrapContext bootstrapContext,
 
 该 EventPublishingRunListener 监听器主要在 Spring 上下文刷新前，使用内部的事件多播器来支持将事件发布给早期就存在的 ApplicationListener 监听器对象。通过查看堆栈，可以看到：
 
-![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/java/debug-profile-04.png)
+![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/spring/debug-profile-04.png)
 
 此处是由 EnvironmentPostProcessorApplicationListener 监听器收到事件并进行处理，而该监听器在收到 ApplicationEnvironmentPreparedEvent 类型事件对象后，调度到内部的 onApplicationEnvironmentPreparedEvent 方法进行处理，并且对应的堆栈信息显示如下：
 
-![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/java/debug-profile-05.png)
+![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/spring/debug-profile-05.png)
 
 可以看到调用 getEnvironmentPostProcessors 方法所获得的 EnvironmentPostProcessor 列表，并且已知当前迭代的 EnvironmentPostProcessor 对象的实际类型是 ConfigDataEnvironmentPostProcessor。
 
@@ -47,7 +47,7 @@ public void environmentPrepared(ConfigurableBootstrapContext bootstrapContext,
 
 在 ConfigDataEnvironmentPostProcessor 内部的 postProcessEnvironment 方法中，发现 Profile 信息的读取是由 ConfigDataActivationContext 对象处理的：
 
-![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/java/debug-profile-06.png)
+![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/spring/debug-profile-06.png)
 
 而 withProfiles 方法内部则则是通过创建 Profiles 对象时，才确认当前激活的 Profile。Profiles 构造器源码如下：
 
@@ -86,11 +86,11 @@ private Collection<String> getProfiles(Environment environment, Binder binder, T
 
 获取属性值是和获取激活的 Profile 同时进行的，在调用完 withProfiles 方法后则调用 processWithProfiles 方法获取到对应配置的 PropertySource 对象：
 
-![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/java/debug-profile-07.png)
+![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/spring/debug-profile-07.png)
 
 此时对应的配置信息存储在 ConfigDataEnvironmentContributors 对象中，后续则在 applyToEnvironment 方法中的调用 applyContributor 方法将获取到的 PropertySource 对象放入环境中：
 
-![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/java/debug-profile-08.png)
+![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/spring/debug-profile-08.png)
 
 applyContributor 具体代码如下：
 
@@ -134,7 +134,7 @@ List<EnvironmentPostProcessor> getEnvironmentPostProcessors(ResourceLoader resou
 
 其中 postProcessorsFactory 属性是一个 Function 函数接口，由对象创建时传入。在此处设置断点，重新运行程序，查看上级调用栈：
 
-![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/java/debug-profile-09.png)
+![](https://my-images-repo.oss-cn-hangzhou.aliyuncs.com/spring/debug-profile-09.png)
 
 fromSpringFactories 方法源码如下：
 
